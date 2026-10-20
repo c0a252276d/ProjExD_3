@@ -93,7 +93,7 @@ class Score:
         self.color = (0, 0, 255)            
         self.score = 0                     
         
-        
+        #現在のスコア文字列Surfaceを生成し，画面に描画する
         self.img = self.fonto.render(f"Score: {self.score}", 0, self.color)
         self.rect = self.img.get_rect()
         self.rect.center = (100, HEIGHT - 50)
