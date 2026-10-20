@@ -84,29 +84,29 @@ class Bird:
         screen.blit(self.img, self.rct)
 
 
-# ビームクラス:
+class Beam:
     """
-     こうかとんが放つビームに関するクラス
-     """
-    def イニシャライザ(self, bird:"Bird"):
-         """
-         ビーム画像Surfaceを生成する
-         引数 bird：ビームを放つこうかとん（Birdインスタンス）
-         """
-         self.img = pg.image.load(f"fig/beam.png")
-         self.rct = self.img.get.rect()
-         self.rct.center=bird.rct.center
-         self.rct.left=bird.rct.right
-         self.vx, self.vy = +5, 0\
+    こうかとんが放つビームに関するクラス
+    """
+    def __init__(self, bird:"Bird"):
+        """
+        ビーム画像Surfaceを生成する
+        引数 bird：ビームを放つこうかとん（Birdインスタンス）
+        """
+        self.img = pg.image.load(f"fig/beam.png")
+        self.rct = self.img.get_rect()
+        self.rct.centery = bird.rct.centery  # ビームの中心縦座標 = こうかとんの中心縦座標
+        self.rct.left = bird.rct.right  # ビームの左座標 = こうかとんの右座標
+        self.vx, self.vy = +5, 0
 
     def update(self, screen: pg.Surface):
-         """
-         ビームを速度ベクトルself.vx, self.vyに基づき移動させる
-         引数 screen：画面Surface
-         """
-         if check_bound(self.rct) == (True, True):
-             self.rct.move_ip(self.vx, self.vy)
-             screen.blit(self.img, self.rct)    
+        """
+        ビームを速度ベクトルself.vx, self.vyに基づき移動させる
+        引数 screen：画面Surface
+        """
+        if check_bound(self.rct) == (True, True):
+            self.rct.move_ip(self.vx, self.vy)
+            screen.blit(self.img, self.rct)    
 
 
 class Bomb:
@@ -167,7 +167,8 @@ def main():
 
         key_lst = pg.key.get_pressed()
         bird.update(key_lst, screen)
-        beam.update(screen)   
+        if beam is not None:
+            beam.update(screen)   
         bomb.update(screen)
         pg.display.update()
         tmr += 1
